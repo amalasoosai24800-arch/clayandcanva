@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+
+<!-- Elegant Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  background:#0b0b0b;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Cormorant Garamond', serif;
+  overflow:hidden;
+}
+
+.wrapper{
+  text-align:center;
+}
+
+/* Logo */
+.logo{
+  position:relative;
+  width:260px;
+  margin:0 auto;
+}
+
+.logo svg{
+  width:100%;
+  display:block;
+}
+
+/* WHITE SHARP LED LAYER */
+.led-layer{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  opacity:0;
+  pointer-events:none;
+
+  /* PURE WHITE LED (NO SHADOW, NO BLUR) */
+  filter: brightness(3) contrast(1.4);
+
+  transition:opacity 0.12s linear;
+}
+
+/* COMING SOON */
+.coming{
+  margin-top:55px;
+  font-family:'Playfair Display', serif;
+  font-size:48px;
+  font-weight:600;
+  letter-spacing:6px;
+
+  background: linear-gradient(90deg,#b29f8a,#e6d5c3,#7f5d41);
+  /*-webkit-background-clip:text;*/
+  -webkit-text-fill-color:transparent;
+
+  opacity:0;
+  transition:opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Soft reveal animation */
+.coming.active{
+  transform:scale(1.03);
+}
+
+/* TAGLINE */
+.tagline{
+  margin-top:18px;
+  font-size:40px;
+
+  letter-spacing:1px;
+  color:/*#8c7a67;*/white;
+  opacity:0.85;
+  font-weight:600;
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="logo">
+
+    <!-- ORIGINAL LOGO -->
+    <svg viewBox="0 0 52.37 48.67">
+      <defs>
+        <linearGradient id="linear-gradient">
+          <stop offset="0" stop-color="#b29f8a"/>
+          <stop offset="1" stop-color="#7f5d41"/>
+        </linearGradient>
+
+        <linearGradient id="linear-gradient-2" xlink:href="#linear-gradient"/>
+        <linearGradient id="linear-gradient-3">
+          <stop offset="0" stop-color="#b29f8a"/>
+          <stop offset="1" stop-color="#b29f8a"/>
+        </linearGradient>
+        <linearGradient id="linear-gradient-4">
+          <stop offset="0" stop-color="#a99580"/>
+          <stop offset="1" stop-color="#654428"/>
+        </linearGradient>
+      </defs>
+
+      <g>
+        <path fill="url(#linear-gradient)" d="M44.19,32.6v4.54h-5.11l-4.98,4.98-3.22-3.22,5.4-5.39c.59-.59,1.38-.92,2.22-.92h5.69Z"/>
+        <path fill="url(#linear-gradient-2)" d="M43.49,11.59v4.55h-4.97c-.84,0-1.62-.33-2.22-.92l-5.41-5.41,3.22-3.22,5,5h4.38Z"/>
+        <path fill="url(#linear-gradient-3)" d="M52.11,34.53c.49,1.18.22,2.52-.68,3.42l-8.43,8.43c-1.48,1.48-3.44,2.29-5.54,2.29s-4.06-.81-5.54-2.29l-4.25-4.25-12.23-12.23c-3.05-3.05-3.05-8.02,0-11.07L30.89,3.38l1.04-1.04c3.05-3.05,8.02-3.05,11.07,0l8.45,8.44c.9.9,1.17,2.24.68,3.42-.49,1.17-1.62,1.93-2.9,1.93h-5.87v-4.55h2.46l-6.04-6.04c-1.28-1.28-3.36-1.28-4.64,0l-1.04,1.04-3.22,3.22-12.23,12.23c-1.28,1.28-1.28,3.36,0,4.64l16.48,16.48c1.28,1.28,3.37,1.28,4.64,0l6.02-6.02h-1.73v-4.54h5.14c1.27,0,2.41.76,2.9,1.93Z"/>
+        <path fill="url(#linear-gradient-4)" d="M26.63,43.11c-1.28,1.28-3.36,1.28-4.64,0L5.51,26.68c-1.28-1.28-1.28-3.36,0-4.64L21.99,5.51c.64-.64,1.48-.96,2.32-.96s1.68.32,2.32.96l1.04,1.04,3.22-3.22-1.04-1.04c-3.05-3.05-8.02-3.05-11.07,0L2.29,18.82c-3.05,3.05-3.05,8.02,0,11.07l16.48,16.43c3.05,3.05,8.02,3.05,11.07,0l1.04-1.04-3.22-3.22-1.04,1.04Z"/>
+      </g>
+    </svg>
+
+    <!-- WHITE LED DUPLICATE -->
+    <svg class="led-layer" viewBox="0 0 52.37 48.67">
+      <g fill="#ffffff">
+        <path d="M44.19,32.6v4.54h-5.11l-4.98,4.98-3.22-3.22,5.4-5.39c.59-.59,1.38-.92,2.22-.92h5.69Z"/>
+        <path d="M43.49,11.59v4.55h-4.97c-.84,0-1.62-.33-2.22-.92l-5.41-5.41,3.22-3.22,5,5h4.38Z"/>
+        <path d="M52.11,34.53c.49,1.18.22,2.52-.68,3.42l-8.43,8.43c-1.48,1.48-3.44,2.29-5.54,2.29s-4.06-.81-5.54-2.29l-4.25-4.25-12.23-12.23c-3.05-3.05-3.05-8.02,0-11.07L30.89,3.38l1.04-1.04c3.05-3.05,8.02-3.05,11.07,0l8.45,8.44c.9.9,1.17,2.24.68,3.42-.49,1.17-1.62,1.93-2.9,1.93h-5.87v-4.55h2.46l-6.04-6.04c-1.28-1.28-3.36-1.28-4.64,0l-1.04,1.04-3.22,3.22-12.23,12.23c-1.28,1.28-1.28,3.36,0,4.64l16.48,16.48c1.28,1.28,3.37,1.28,4.64,0l6.02-6.02h-1.73v-4.54h5.14c1.27,0,2.41.76,2.9,1.93Z"/>
+        <path d="M26.63,43.11c-1.28,1.28-3.36,1.28-4.64,0L5.51,26.68c-1.28-1.28-1.28-3.36,0-4.64L21.99,5.51c.64-.64,1.48-.96,2.32-.96s1.68.32,2.32.96l1.04,1.04,3.22-3.22-1.04-1.04c-3.05-3.05-8.02-3.05-11.07,0L2.29,18.82c-3.05,3.05-3.05,8.02,0,11.07l16.48,16.43c3.05,3.05,8.02,3.05,11.07,0l1.04-1.04-3.22-3.22-1.04,1.04Z"/>
+      </g>
+    </svg>
+
+  </div>
+
+  <div class="coming" id="coming">COMING SOON...</div>
+
+  <div class="tagline">
+    Website under meticulous construction.<br>
+    A refined digital experience is arriving shortly.
+  </div>
+
+</div>
+
+<script>
+const led = document.querySelector(".led-layer");
+const coming = document.getElementById("coming");
+
+let timeout;
+
+window.addEventListener("mousemove", () => {
+
+  led.style.opacity = "1";
+  coming.style.opacity = "1";
+  coming.classList.add("active");
+
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    led.style.opacity = "0";
+    coming.style.opacity = "0";
+    coming.classList.remove("active");
+  }, 150);
+
+});
+</script>
+
+</body>
+</html>
