@@ -1,169 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coming Soon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
 
-<!-- Elegant Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-body{
-  height:100vh;
-  background:#0b0b0b;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Cormorant Garamond', serif;
-  overflow:hidden;
-}
+    body{
+      min-height:100vh;
+      background:#0a0a0a;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+      font-family:'Playfair Display', serif;
+    }
 
-.wrapper{
-  text-align:center;
-}
+    .scene{
+      display:flex;
+      align-items:center;
+      gap:40px;
+      position:relative;
+      padding:20px;
+    }
 
-/* Logo */
-.logo{
-  position:relative;
-  width:260px;
-  margin:0 auto;
-}
+    /* LEFT LOGO */
+    .logo-wrap{
+      width:170px;
+      flex-shrink:0;
+      position:relative;
+      animation: logoGlow 4.8s infinite ease-in-out;
+      transform-origin:center;
+      z-index:3;
+    }
 
-.logo svg{
-  width:100%;
-  display:block;
-}
+    .logo-wrap svg{
+      width:100%;
+      display:block;
+    }
 
-/* WHITE SHARP LED LAYER */
-.led-layer{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  opacity:0;
-  pointer-events:none;
+    /* LIGHT BURST near logo (no line) */
+    .burst{
+      position:absolute;
+      left:150px;
+      top:50%;
+      width:110px;
+      height:110px;
+      transform:translateY(-50%);
+      pointer-events:none;
+      z-index:1;
+    }
 
-  /* PURE WHITE LED (NO SHADOW, NO BLUR) */
-  filter: brightness(3) contrast(1.4);
+    .burst::before,
+    .burst::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      opacity:0;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.25) 20%, rgba(255,255,255,0) 65%);
+      filter: blur(6px);
+      animation: burstGlow 4.8s infinite ease-in-out;
+    }
 
-  transition:opacity 0.12s linear;
-}
+    .burst::after{
+      animation-delay: .12s;
+      transform: scale(.75);
+    }
 
-/* COMING SOON */
-.coming{
-  margin-top:55px;
-  font-family:'Playfair Display', serif;
-  font-size:48px;
-  font-weight:600;
-  letter-spacing:6px;
+    /* tiny spark particles */
+    .spark{
+      position:absolute;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#fff;
+      opacity:0;
+      box-shadow:
+        0 0 8px rgba(255,255,255,.95),
+        0 0 18px rgba(255,255,255,.7);
+    }
 
-  background: linear-gradient(90deg,#b29f8a,#e6d5c3,#7f5d41);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+    .s1{ left:30px; top:52px; animation: spark1 4.8s infinite ease-in-out; }
+    .s2{ left:48px; top:34px; animation: spark2 4.8s infinite ease-in-out; }
+    .s3{ left:56px; top:70px; animation: spark3 4.8s infinite ease-in-out; }
+    .s4{ left:74px; top:44px; animation: spark4 4.8s infinite ease-in-out; }
+    .s5{ left:86px; top:62px; animation: spark5 4.8s infinite ease-in-out; }
 
-  opacity:0;
-  transition:opacity 0.3s ease, transform 0.3s ease;
-}
+    /* RIGHT TEXT */
+    .text-wrap{
+      min-width:460px;
+      position:relative;
+      overflow:hidden;
+    }
 
-/* Soft reveal animation */
-.coming.active{
-  transform:scale(1.03);
-}
+    .coming{
+      position:relative;
+      font-size:56px;
+      font-weight:600;
+      letter-spacing:8px;
+      text-transform:uppercase;
+      white-space:nowrap;
 
-/* TAGLINE */
-.tagline{
-  margin-top:18px;
-  font-size:40px;
+      background:linear-gradient(90deg,#cdb7a0 0%, #ffffff 45%, #8f6d4e 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
 
-  letter-spacing:1px;
-  color:/*#8c7a67;*/white;
-  opacity:0.85;
-  font-weight:600;
-}
-</style>
+      opacity:0;
+      filter:blur(12px);
+      transform:translateX(-30px) scale(.985);
+      animation:textForm 4.8s infinite ease-in-out;
+    }
+
+    /* shimmer sweep over text */
+    .coming::after{
+      content:"COMING SOON";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.1) 30%,
+        rgba(255,255,255,0.95) 50%,
+        rgba(255,255,255,0.1) 70%,
+        rgba(255,255,255,0) 100%
+      );
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      opacity:0;
+      transform:translateX(-120%);
+      animation: shinePass 4.8s infinite ease-in-out;
+      pointer-events:none;
+    }
+
+    /* dust light overlay so text feels created from light */
+    .text-glow{
+      position:absolute;
+      left:-30px;
+      top:50%;
+      width:180px;
+      height:120px;
+      transform:translateY(-50%);
+      pointer-events:none;
+      z-index:2;
+      opacity:0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.35) 18%, rgba(255,255,255,0) 58%);
+      filter: blur(10px);
+      animation: textDust 4.8s infinite ease-in-out;
+    }
+
+    /* ANIMATIONS */
+
+    @keyframes logoGlow{
+      0%, 10%{
+        filter:none;
+        transform:scale(1);
+      }
+      16%{
+        filter:
+          drop-shadow(0 0 5px rgba(255,255,255,0.85))
+          drop-shadow(0 0 14px rgba(255,255,255,0.55))
+          drop-shadow(0 0 24px rgba(255,255,255,0.25));
+        transform:scale(1.02);
+      }
+      24%{
+        filter:
+          drop-shadow(0 0 2px rgba(255,255,255,0.45))
+          drop-shadow(0 0 8px rgba(255,255,255,0.25));
+        transform:scale(1);
+      }
+      36%, 100%{
+        filter:none;
+        transform:scale(1);
+      }
+    }
+
+    @keyframes burstGlow{
+      0%, 14%{
+        opacity:0;
+        transform:scale(.45);
+      }
+      20%{
+        opacity:1;
+        transform:scale(1);
+      }
+      30%{
+        opacity:.55;
+        transform:scale(1.35);
+      }
+      42%, 100%{
+        opacity:0;
+        transform:scale(1.7);
+      }
+    }
+
+    @keyframes spark1{
+      0%,16%{ opacity:0; transform:translate(0,0) scale(.5); }
+      24%{ opacity:1; transform:translate(28px,-10px) scale(1); }
+      34%{ opacity:.8; transform:translate(70px,-14px) scale(.9); }
+      46%,100%{ opacity:0; transform:translate(110px,-18px) scale(.4); }
+    }
+    @keyframes spark2{
+      0%,16%{ opacity:0; transform:translate(0,0) scale(.5); }
+      24%{ opacity:1; transform:translate(24px,-16px) scale(1); }
+      34%{ opacity:.75; transform:translate(72px,-24px) scale(.85); }
+      46%,100%{ opacity:0; transform:translate(118px,-30px) scale(.4); }
+    }
+    @keyframes spark3{
+      0%,16%{ opacity:0; transform:translate(0,0) scale(.5); }
+      24%{ opacity:1; transform:translate(26px,8px) scale(1); }
+      34%{ opacity:.75; transform:translate(78px,16px) scale(.85); }
+      46%,100%{ opacity:0; transform:translate(126px,22px) scale(.4); }
+    }
+    @keyframes spark4{
+      0%,16%{ opacity:0; transform:translate(0,0) scale(.5); }
+      24%{ opacity:1; transform:translate(24px,-4px) scale(1); }
+      34%{ opacity:.8; transform:translate(86px,-6px) scale(.85); }
+      46%,100%{ opacity:0; transform:translate(138px,-8px) scale(.4); }
+    }
+    @keyframes spark5{
+      0%,16%{ opacity:0; transform:translate(0,0) scale(.5); }
+      24%{ opacity:1; transform:translate(20px,2px) scale(1); }
+      34%{ opacity:.8; transform:translate(92px,6px) scale(.85); }
+      46%,100%{ opacity:0; transform:translate(146px,10px) scale(.4); }
+    }
+
+    @keyframes textDust{
+      0%, 26%{
+        opacity:0;
+        transform:translateY(-50%) translateX(-10px) scale(.7);
+      }
+      34%{
+        opacity:1;
+        transform:translateY(-50%) translateX(10px) scale(1);
+      }
+      46%{
+        opacity:.55;
+        transform:translateY(-50%) translateX(65px) scale(1.35);
+      }
+      60%,100%{
+        opacity:0;
+        transform:translateY(-50%) translateX(130px) scale(1.7);
+      }
+    }
+
+    @keyframes textForm{
+      0%, 28%{
+        opacity:0;
+        filter:blur(12px);
+        transform:translateX(-30px) scale(.985);
+      }
+      38%{
+        opacity:.45;
+        filter:blur(6px);
+        transform:translateX(-10px) scale(.995);
+      }
+      48%{
+        opacity:1;
+        filter:blur(0);
+        transform:translateX(0) scale(1);
+      }
+      82%{
+        opacity:1;
+        filter:blur(0);
+        transform:translateX(0) scale(1);
+      }
+      100%{
+        opacity:0;
+        filter:blur(6px);
+        transform:translateX(12px) scale(.99);
+      }
+    }
+
+    @keyframes shinePass{
+      0%, 50%{
+        opacity:0;
+        transform:translateX(-120%);
+      }
+      56%{
+        opacity:1;
+      }
+      70%{
+        opacity:1;
+        transform:translateX(120%);
+      }
+      78%, 100%{
+        opacity:0;
+        transform:translateX(120%);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .logo-wrap{
+        width:130px;
+      }
+
+      .burst{
+        left:110px;
+        width:90px;
+        height:90px;
+      }
+
+      .text-wrap{
+        min-width:300px;
+      }
+
+      .coming{
+        font-size:36px;
+        letter-spacing:5px;
+      }
+    }
+
+    @media (max-width: 640px){
+      .scene{
+        flex-direction:column;
+        gap:24px;
+      }
+
+      .burst{
+        left:50%;
+        top:100%;
+        transform:translate(-50%, -30%);
+      }
+
+      .text-wrap{
+        min-width:auto;
+      }
+
+      .coming{
+        font-size:28px;
+        letter-spacing:4px;
+        text-align:center;
+      }
+
+      .text-glow{
+        left:50%;
+        transform:translate(-50%, -50%);
+      }
+
+      @keyframes textDust{
+        0%, 26%{
+          opacity:0;
+          transform:translate(-50%, -50%) scale(.7);
+        }
+        34%{
+          opacity:1;
+          transform:translate(-40%, -50%) scale(1);
+        }
+        46%{
+          opacity:.55;
+          transform:translate(-20%, -50%) scale(1.35);
+        }
+        60%,100%{
+          opacity:0;
+          transform:translate(0%, -50%) scale(1.7);
+        }
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="wrapper">
+  <div class="scene">
 
-  <div class="logo">
+    <!-- ONLY ONE SVG LOGO -->
+    <div class="logo-wrap">
+      <svg viewBox="0 0 52.37 48.67">
+        <defs>
+          <linearGradient id="linear-gradient">
+            <stop offset="0" stop-color="#b29f8a"/>
+            <stop offset="1" stop-color="#7f5d41"/>
+          </linearGradient>
 
-    <!-- ORIGINAL LOGO -->
-    <svg viewBox="0 0 52.37 48.67">
-      <defs>
-        <linearGradient id="linear-gradient">
-          <stop offset="0" stop-color="#b29f8a"/>
-          <stop offset="1" stop-color="#7f5d41"/>
-        </linearGradient>
+          <linearGradient id="linear-gradient-2" xlink:href="#linear-gradient"/>
+          <linearGradient id="linear-gradient-3">
+            <stop offset="0" stop-color="#b29f8a"/>
+            <stop offset="1" stop-color="#b29f8a"/>
+          </linearGradient>
+          <linearGradient id="linear-gradient-4">
+            <stop offset="0" stop-color="#a99580"/>
+            <stop offset="1" stop-color="#654428"/>
+          </linearGradient>
+        </defs>
 
-        <linearGradient id="linear-gradient-2" xlink:href="#linear-gradient"/>
-        <linearGradient id="linear-gradient-3">
-          <stop offset="0" stop-color="#b29f8a"/>
-          <stop offset="1" stop-color="#b29f8a"/>
-        </linearGradient>
-        <linearGradient id="linear-gradient-4">
-          <stop offset="0" stop-color="#a99580"/>
-          <stop offset="1" stop-color="#654428"/>
-        </linearGradient>
-      </defs>
+        <g>
+          <path fill="url(#linear-gradient)" d="M44.19,32.6v4.54h-5.11l-4.98,4.98-3.22-3.22,5.4-5.39c.59-.59,1.38-.92,2.22-.92h5.69Z"/>
+          <path fill="url(#linear-gradient-2)" d="M43.49,11.59v4.55h-4.97c-.84,0-1.62-.33-2.22-.92l-5.41-5.41,3.22-3.22,5,5h4.38Z"/>
+          <path fill="url(#linear-gradient-3)" d="M52.11,34.53c.49,1.18.22,2.52-.68,3.42l-8.43,8.43c-1.48,1.48-3.44,2.29-5.54,2.29s-4.06-.81-5.54-2.29l-4.25-4.25-12.23-12.23c-3.05-3.05-3.05-8.02,0-11.07L30.89,3.38l1.04-1.04c3.05-3.05,8.02-3.05,11.07,0l8.45,8.44c.9.9,1.17,2.24.68,3.42-.49,1.17-1.62,1.93-2.9,1.93h-5.87v-4.55h2.46l-6.04-6.04c-1.28-1.28-3.36-1.28-4.64,0l-1.04,1.04-3.22,3.22-12.23,12.23c-1.28,1.28-1.28,3.36,0,4.64l16.48,16.48c1.28,1.28,3.37,1.28,4.64,0l6.02-6.02h-1.73v-4.54h5.14c1.27,0,2.41.76,2.9,1.93Z"/>
+          <path fill="url(#linear-gradient-4)" d="M26.63,43.11c-1.28,1.28-3.36,1.28-4.64,0L5.51,26.68c-1.28-1.28-1.28-3.36,0-4.64L21.99,5.51c.64-.64,1.48-.96,2.32-.96s1.68.32,2.32.96l1.04,1.04,3.22-3.22-1.04-1.04c-3.05-3.05-8.02-3.05-11.07,0L2.29,18.82c-3.05,3.05-3.05,8.02,0,11.07l16.48,16.43c3.05,3.05,8.02,3.05,11.07,0l1.04-1.04-3.22-3.22-1.04,1.04Z"/>
+        </g>
+      </svg>
+    </div>
 
-      <g>
-        <path fill="url(#linear-gradient)" d="M44.19,32.6v4.54h-5.11l-4.98,4.98-3.22-3.22,5.4-5.39c.59-.59,1.38-.92,2.22-.92h5.69Z"/>
-        <path fill="url(#linear-gradient-2)" d="M43.49,11.59v4.55h-4.97c-.84,0-1.62-.33-2.22-.92l-5.41-5.41,3.22-3.22,5,5h4.38Z"/>
-        <path fill="url(#linear-gradient-3)" d="M52.11,34.53c.49,1.18.22,2.52-.68,3.42l-8.43,8.43c-1.48,1.48-3.44,2.29-5.54,2.29s-4.06-.81-5.54-2.29l-4.25-4.25-12.23-12.23c-3.05-3.05-3.05-8.02,0-11.07L30.89,3.38l1.04-1.04c3.05-3.05,8.02-3.05,11.07,0l8.45,8.44c.9.9,1.17,2.24.68,3.42-.49,1.17-1.62,1.93-2.9,1.93h-5.87v-4.55h2.46l-6.04-6.04c-1.28-1.28-3.36-1.28-4.64,0l-1.04,1.04-3.22,3.22-12.23,12.23c-1.28,1.28-1.28,3.36,0,4.64l16.48,16.48c1.28,1.28,3.37,1.28,4.64,0l6.02-6.02h-1.73v-4.54h5.14c1.27,0,2.41.76,2.9,1.93Z"/>
-        <path fill="url(#linear-gradient-4)" d="M26.63,43.11c-1.28,1.28-3.36,1.28-4.64,0L5.51,26.68c-1.28-1.28-1.28-3.36,0-4.64L21.99,5.51c.64-.64,1.48-.96,2.32-.96s1.68.32,2.32.96l1.04,1.04,3.22-3.22-1.04-1.04c-3.05-3.05-8.02-3.05-11.07,0L2.29,18.82c-3.05,3.05-3.05,8.02,0,11.07l16.48,16.43c3.05,3.05,8.02,3.05,11.07,0l1.04-1.04-3.22-3.22-1.04,1.04Z"/>
-      </g>
-    </svg>
+    <!-- LIGHT BURST (NO LINE) -->
+    <div class="burst">
+      <span class="spark s1"></span>
+      <span class="spark s2"></span>
+      <span class="spark s3"></span>
+      <span class="spark s4"></span>
+      <span class="spark s5"></span>
+    </div>
 
-    <!-- WHITE LED DUPLICATE -->
-    <svg class="led-layer" viewBox="0 0 52.37 48.67">
-      <g fill="#ffffff">
-        <path d="M44.19,32.6v4.54h-5.11l-4.98,4.98-3.22-3.22,5.4-5.39c.59-.59,1.38-.92,2.22-.92h5.69Z"/>
-        <path d="M43.49,11.59v4.55h-4.97c-.84,0-1.62-.33-2.22-.92l-5.41-5.41,3.22-3.22,5,5h4.38Z"/>
-        <path d="M52.11,34.53c.49,1.18.22,2.52-.68,3.42l-8.43,8.43c-1.48,1.48-3.44,2.29-5.54,2.29s-4.06-.81-5.54-2.29l-4.25-4.25-12.23-12.23c-3.05-3.05-3.05-8.02,0-11.07L30.89,3.38l1.04-1.04c3.05-3.05,8.02-3.05,11.07,0l8.45,8.44c.9.9,1.17,2.24.68,3.42-.49,1.17-1.62,1.93-2.9,1.93h-5.87v-4.55h2.46l-6.04-6.04c-1.28-1.28-3.36-1.28-4.64,0l-1.04,1.04-3.22,3.22-12.23,12.23c-1.28,1.28-1.28,3.36,0,4.64l16.48,16.48c1.28,1.28,3.37,1.28,4.64,0l6.02-6.02h-1.73v-4.54h5.14c1.27,0,2.41.76,2.9,1.93Z"/>
-        <path d="M26.63,43.11c-1.28,1.28-3.36,1.28-4.64,0L5.51,26.68c-1.28-1.28-1.28-3.36,0-4.64L21.99,5.51c.64-.64,1.48-.96,2.32-.96s1.68.32,2.32.96l1.04,1.04,3.22-3.22-1.04-1.04c-3.05-3.05-8.02-3.05-11.07,0L2.29,18.82c-3.05,3.05-3.05,8.02,0,11.07l16.48,16.43c3.05,3.05,8.02,3.05,11.07,0l1.04-1.04-3.22-3.22-1.04,1.04Z"/>
-      </g>
-    </svg>
+    <!-- TEXT -->
+    <div class="text-wrap">
+      <div class="text-glow"></div>
+      <div class="coming">COMING SOON</div>
+    </div>
 
   </div>
-
-  <div class="coming" id="coming">COMING SOON...</div>
-
-  <div class="tagline">
-    Website under meticulous construction.<br>
-    A refined digital experience is arriving shortly.
-  </div>
-
-</div>
-
-<script>
-const led = document.querySelector(".led-layer");
-const coming = document.getElementById("coming");
-
-let timeout;
-
-window.addEventListener("mousemove", () => {
-
-  led.style.opacity = "1";
-  coming.style.opacity = "1";
-  coming.classList.add("active");
-
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    led.style.opacity = "0";
-    coming.style.opacity = "0";
-    coming.classList.remove("active");
-  }, 150);
-
-});
-</script>
 
 </body>
 </html>
